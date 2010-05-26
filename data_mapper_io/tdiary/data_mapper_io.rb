@@ -156,6 +156,24 @@ module TDiary
 				end
 			end
 		end
+
+		def calendar
+			calendar = {}
+
+			sql =<<-EOS
+				SELECT substr(date, 1, 4) as year, substr(date, 5, 2) as month
+				FROM diaries
+				ORDER BY date
+			EOS
+			yms = repository(:default).adapter.query(sql)
+
+			yms.to_a.each do |ym|
+				calendar[ym.year] = [] unless calendar[ym.year]
+				calendar[ym.year] << ym.month
+			end
+
+			calendar
+		end
 	end
 
 	class Config
