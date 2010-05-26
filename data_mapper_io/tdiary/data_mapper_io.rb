@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # data_mapper_io.rb
 #
+# You can redistribute it and/or modify it under the same license as tDiary.
+#
 # TODO:
 #   * ついでにキャッシュファイルもDB（？）に
 #   * DBの設定を設定ファイルで行うように
