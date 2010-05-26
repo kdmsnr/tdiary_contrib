@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-# data_mapper_io.rb
+#
+# data_mapper_io.rb: tDiary IO class for DataMapper
 #
 # You can redistribute it and/or modify it under the same license as tDiary.
 #
