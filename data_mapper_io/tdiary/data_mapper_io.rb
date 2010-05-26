@@ -196,7 +196,7 @@ module TDiary
 					config.save
 				end
 
-				cgi_conf = config
+				cgi_conf = config.body
 				cgi_conf.untaint unless @secure
 
 				b = binding.taint
