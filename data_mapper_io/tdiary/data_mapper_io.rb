@@ -79,6 +79,15 @@ module TDiary
 			
 			belongs_to :diary, :child_key => [:diary_date]
 		end
+
+		class Config
+			include ::DataMapper::Resource
+			storage_names[:default] = 'configs'
+
+			property :id,  Integer, :key => true
+			property :body, Text, :lazy => false
+			auto_upgrade!
+		end
 	end
 
 	require 'tdiary/defaultio'
@@ -142,6 +151,75 @@ module TDiary
 					}
 					rm.save
 				end
+			end
+		end
+	end
+
+	class Config
+		# saving to tdiary.conf in DB
+		def save
+			result = ERB::new( File::open( "#{PATH}/skel/tdiary.rconf" ){|f| f.read }.untaint ).result( binding )
+			result.untaint unless @secure
+			
+			# TODO: think about ID
+			config = DataMapper::Config.get(1)
+			unless config
+				config = DataMapper::Config.new( :id => 1 )
+			end
+			config.body = result
+			config.save
+		end
+
+		def load_cgi_conf
+			begin
+				def_vars1 = ''
+				def_vars2 = ''
+				[
+					:tdiary_version,
+					:html_title, :author_name, :author_mail, :index_page, :hour_offset,
+					:description, :icon, :banner,
+					:header, :footer,
+					:section_anchor, :comment_anchor, :date_format, :latest_limit, :show_nyear,
+					:theme, :css,
+					:show_comment, :comment_limit, :comment_limit_per_day,
+					:mail_on_comment, :mail_header,
+					:show_referer, :no_referer2, :only_volatile2, :referer_table2,
+					:options2,
+				].each do |var|
+					def_vars1 << "#{var} = nil\n"
+					def_vars2 << "@#{var} = #{var} unless #{var} == nil\n"
+				end
+				
+				# TODO: think about ID
+				config = DataMapper::Config.get(1)
+				unless config
+					config = DataMapper::Config.new( :id => 1 )
+					config.save
+				end
+
+				cgi_conf = config
+				cgi_conf.untaint unless @secure
+
+				b = binding.taint
+				eval( def_vars1, b )
+				Safe::safe( @secure ? 4 : TDIARY_SAFE_NORMAL ) do
+					begin
+						eval( cgi_conf.to_s, b, "(TDiary::Config#load_cgi_conf)", 1 )
+					rescue SyntaxError
+						enc = case @lang
+							when 'en'
+								'UTF-8'
+							when 'zh'
+								'Big5'
+							else
+								'EUC-JP'
+							end
+						cgi_conf.force_encoding( enc )
+						# retry
+					end
+				end
+				eval( def_vars2, b )
+			rescue IOError, Errno::ENOENT
 			end
 		end
 	end
