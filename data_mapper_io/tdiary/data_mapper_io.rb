@@ -19,7 +19,7 @@ require 'rubygems'
 require 'dm-core'
 
 if DataMapper::Repository.adapters.empty?
-	DataMapper::setup(:default, "sqlite3:db.sqlite3")
+	DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3:db.sqlite3")
 end
 
 module TDiary
