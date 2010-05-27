@@ -178,6 +178,20 @@ module TDiary
 		end
 	end
 
+	class TDiaryBase
+		def load_logger
+			require 'logger'
+			@logger = Logger::new( STDERR, 'daily' )
+		end
+
+		def cache_enable?( prefix )
+			false
+		end
+
+		def store_cache( cache, prefix )
+		end
+	end
+
 	class Config
 		# saving to tdiary.conf in DB
 		def save
