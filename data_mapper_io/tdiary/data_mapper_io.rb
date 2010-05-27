@@ -4,6 +4,11 @@
 #
 # You can redistribute it and/or modify it under the same license as tDiary.
 #
+# USAGE:
+#   * edit tdiary.conf:
+#   require 'tdiary/data_mapper_io'
+#   @io_class = TDiary::DataMapperIO
+#
 # TODO:
 #   * ついでにキャッシュファイルもDB（？）に
 #   * DBの設定を設定ファイルで行うように
@@ -13,7 +18,9 @@
 require 'rubygems'
 require 'dm-core'
 
-DataMapper::setup(:default, ENV['DATABASE_URL'] || 'sqlite3:db.sqlite3')
+if DataMapper::Repository.adapters.empty?
+	DataMapper::setup(:default, "sqlite3:db.sqlite3")
+end
 
 module TDiary
 	module DataMapper
@@ -23,7 +30,7 @@ module TDiary
 
 			property :date, String, :key => true
 			property :title, String
-			property :body, Text, :lazy => false
+			property :body, Text #, :lazy => false
 			property :format, String, :nullable => false
 			property :visible, Boolean, :nullable => false, :default => true
 			property :last_modified, Time
@@ -160,16 +167,11 @@ module TDiary
 		def calendar
 			calendar = {}
 
-			sql =<<-EOS
-				SELECT substr(date, 1, 4) as year, substr(date, 5, 2) as month
-				FROM diaries
-				ORDER BY date
-			EOS
-			yms = repository(:default).adapter.query(sql)
-
-			yms.to_a.each do |ym|
-				calendar[ym.year] = [] unless calendar[ym.year]
-				calendar[ym.year] << ym.month
+			diaries = DataMapper::Diary.all(:order => [:date])
+			diaries.to_a.each do |diary|
+				year, month = diary.date.scan(/(\d{4})(\d\d)/)[0]
+				calendar[year] = [] unless calendar[year]
+				calendar[year] << month
 			end
 
 			calendar
