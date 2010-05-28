@@ -42,7 +42,7 @@ def twitter_format( id, format = "@:screen_name / :text" )
   format.gsub!(/:profile_image/,
                %Q|<a href="http://twitter.com/#{parsed["user"]["screen_name"]}"><img src="#{parsed["user"]["profile_image_url"]}" border="0" /></a>|)
 
-  return format
+  return %Q|<div class="twitter">#{format.chomp}</div>|
 end
 
 def twitter( id )
