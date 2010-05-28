@@ -22,8 +22,6 @@ def twitter_detail( id )
 :created_at
 :source
 EOS
-  twitter_format(id, format)
-
   twitter_format( id , format)
 end
 
