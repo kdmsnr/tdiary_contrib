@@ -5,7 +5,6 @@ require 'redgreen'
 require 'tdiary_twitter'
 
 class TestTwitter < Test::Unit::TestCase
-
 	should "twitter_title" do
 		assert_equal('<div class="twitter">@tDiary / そういえば、明日で9歳になります!</div>', twitter_title(12425500138))
 	end

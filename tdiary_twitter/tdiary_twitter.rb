@@ -12,7 +12,7 @@ require 'json'
 require 'time'
 
 def twitter_title( id )
-	twitter_format(id, "@:screen_name / :text")
+	twitter_format(twitter_json( id ), "@:screen_name / :text")
 end
 
 def twitter_tweet( id )
@@ -21,7 +21,7 @@ def twitter_tweet( id )
 :created_at
 :source
 EOS
-	twitter_format(id, format)
+	twitter_format(twitter_json( id ), format)
 end
 
 def twitter_detail( id )
@@ -30,38 +30,37 @@ def twitter_detail( id )
 :created_at
 :source
 EOS
-	twitter_format( id , format)
+	twitter_format( twitter_json( id ), format)
 end
 
 def twitter_tree( id )
-	ids = []
-	ids << id
+	format =<<-EOS
+:profile_image :text<br />
+:created_at
+:source
+EOS
+
+	results = []
 	while ( id )
 		parsed = twitter_json( id )
 		id = parsed["in_reply_to_status_id"]
-		ids << id unless id.nil?
+		result = twitter_format( parsed, format )
+		results << result
 	end
-
-	result = []
-	ids.reverse.each do |id|
-		result << twitter_detail( id )
-	end
-	result.join("\n")
+	results.reverse.join("\n")
 end
 
-def twitter_format( id, format = "@:screen_name / :text" )
-	parsed = twitter_json( id )
-
-	format.gsub!(/:screen_name/, parsed["user"]["screen_name"])
-	format.gsub!(/:text/, parsed["text"])
-	format.gsub!(/:source/, parsed["source"])
+def twitter_format( parsed, format = "@:screen_name / :text" )
+	result = format.dup
+	result.gsub!(/:screen_name/, parsed["user"]["screen_name"])
+	result.gsub!(/:text/, parsed["text"])
+	result.gsub!(/:source/, parsed["source"])
 	t = Time.parse parsed["created_at"]
-	format.gsub!(/:created_at/,
-					 %Q|<a href="http://twitter.com/#{parsed["user"]["screen_name"]}/status/#{id}">#{t.strftime("%Y-%m-%d %H:%M:%S")}</a>|)
-	format.gsub!(/:profile_image/,
+	result.gsub!(/:created_at/,
+					 %Q|<a href="http://twitter.com/#{parsed["user"]["screen_name"]}/status/#{parsed["id"]}">#{t.strftime("%Y-%m-%d %H:%M:%S")}</a>|)
+	result.gsub!(/:profile_image/,
 					 %Q|<a href="http://twitter.com/#{parsed["user"]["screen_name"]}"><img src="#{parsed["user"]["profile_image_url"]}" border="0" /></a>|)
-
-	return %Q|<div class="twitter">#{format.chomp}</div>|
+	return %Q|<div class="twitter">#{result.chomp}</div>|
 end
 
 def twitter( id )
