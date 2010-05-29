@@ -53,7 +53,10 @@ end
 def twitter_format( parsed, format = "@:screen_name / :text" )
 	result = format.dup
 	result.gsub!(/:screen_name/, parsed["user"]["screen_name"])
-	result.gsub!(/:text/, parsed["text"])
+	formated_text = parsed["text"].gsub(/https?:\/\/[^\s]+/) do |url|
+		%Q|<a href="#{url}">#{url}</a>|
+	end
+	result.gsub!(/:text/, formated_text)
 	result.gsub!(/:source/, parsed["source"])
 	t = Time.parse parsed["created_at"]
 	result.gsub!(/:created_at/,

@@ -32,7 +32,7 @@ EOS
 <div class="twitter"><a href="http://twitter.com/hsbt"><img src="http://a3.twimg.com/profile_images/324464297/DSC00731_normal.jpg" border="0" /></a> @tDiary おめでとうございます! wishlist を公開してください<br />
 <a href="http://twitter.com/hsbt/status/12425723279">2010-04-19 09:09:03</a>
 <a href="http://coderepos.org/share/browser/lang/ruby/misc/tig.rb" rel="nofollow">tig.rb</a></div>
-<div class="twitter"><a href="http://twitter.com/tDiary"><img src="http://a3.twimg.com/profile_images/379668735/square_logo_normal.png" border="0" /></a> @hsbt つ http://www.cozmixng.org/retro/projects/tdiary/tickets<br />
+<div class="twitter"><a href="http://twitter.com/tDiary"><img src="http://a3.twimg.com/profile_images/379668735/square_logo_normal.png" border="0" /></a> @hsbt つ <a href="http://www.cozmixng.org/retro/projects/tdiary/tickets">http://www.cozmixng.org/retro/projects/tdiary/tickets</a><br />
 <a href="http://twitter.com/tDiary/status/12435185771">2010-04-19 12:21:52</a>
 <a href="http://www.tweetdeck.com" rel="nofollow">TweetDeck</a></div>
 EOS
