@@ -3,6 +3,7 @@
 # USAGE
 #   title: {{twitter_title 12425500138}}
 #   tweet: {{twitter_tweet 12425500138}} or {{twitter 12425500138}}
+#   tree:  {{twitter_tree 12435185771}}
 #   detail: {{twitter_detail 12425500138}}
 
 require 'rubygems'
@@ -32,13 +33,24 @@ EOS
 	twitter_format( id , format)
 end
 
-# TBD
-# def twitter_tree( id )
-# end
+def twitter_tree( id )
+	ids = []
+	ids << id
+	while ( id )
+		parsed = twitter_json( id )
+		id = parsed["in_reply_to_status_id"]
+		ids << id unless id.nil?
+	end
+
+	result = []
+	ids.reverse.each do |id|
+		result << twitter_detail( id )
+	end
+	result.join("\n")
+end
 
 def twitter_format( id, format = "@:screen_name / :text" )
-	json =   open("http://twitter.com/status/show/#{id}.json").read
-	parsed = JSON.parse( json )
+	parsed = twitter_json( id )
 
 	format.gsub!(/:screen_name/, parsed["user"]["screen_name"])
 	format.gsub!(/:text/, parsed["text"])
@@ -55,6 +67,13 @@ end
 def twitter( id )
 	twitter_tweet( id )
 end
+
+private
+def twitter_json( id )
+	json = open("http://twitter.com/status/show/#{id}.json").read
+	return JSON.parse( json )
+end
+
 
 # Local Variables:
 # mode: ruby
