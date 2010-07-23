@@ -35,7 +35,7 @@ add_conf_proc("FacebookLike", "Facebook Like", "etc") do
 		end
 	end
 
-	if @conf["facebook_like.width"].empty?
+	if @conf["facebook_like.width"].to_s.empty?
 		@conf["facebook_like.width"] = 450
 	end
 
