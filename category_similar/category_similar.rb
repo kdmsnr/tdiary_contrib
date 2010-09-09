@@ -5,7 +5,9 @@
 
 def category_similar( categories = [], max_item = 3)
 	info = Category::Info.new(@cgi, @years, @conf)
-	hash = @category_cache.categorize(info.category, info.years)
+	months = [['01', '02', '03'], ['04', '05', '06'], ['07', '08', '09'], ['10', '11', '12']][@date.strftime("%m").to_i / (3 + 1)] # quarter
+	years = { @date.strftime("%Y") => months }
+	hash = @category_cache.categorize(info.category, years)
 	items = []
 	hash.values_at(*categories).inject({}){|r, i| r.merge i }.each do |ymd_ary|
 		ymd = ymd_ary[0]
