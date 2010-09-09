@@ -12,7 +12,6 @@ def category_similar( categories = [], max_item = 3)
 		ary = ymd_ary[1]
 		next if ymd == @date.strftime('%Y%m%d')
 		t = Time.local(ymd[0,4], ymd[4,2], ymd[6,2]).strftime(@conf.date_format)
-		File.open("/tmp/log", "w+"){|f| f.puts ary.inspect}
 		ary.each do |idx, title, excerpt|
 			items << %Q|<a href="#{h @index}#{anchor "#{ymd}#p#{'%02d' % idx}"}" title="#{h excerpt}">#{t}#p#{'%02d' % idx}</a> #{apply_plugin(title)}|
 		end
