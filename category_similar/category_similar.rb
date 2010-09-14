@@ -9,7 +9,9 @@ def category_similar( categories = [], max_item = 3)
 	years = { @date.strftime("%Y") => months }
 	hash = @category_cache.categorize(info.category, years)
 	items = []
-	hash.values_at(*categories).inject({}){|r, i| r.merge i }.each do |ymd_ary|
+	hash.values_at(*categories).inject({}){|r, i|
+		r.merge i unless i.nil?
+	}.to_a.each do |ymd_ary|
 		ymd = ymd_ary[0]
 		ary = ymd_ary[1]
 		next if ymd == @date.strftime('%Y%m%d')
