@@ -10,7 +10,7 @@ def category_similar( categories = [], max_item = 3)
 	hash = @category_cache.categorize(info.category, years)
 	items = []
 	hash.values_at(*categories).inject({}){|r, i|
-		r.merge i unless i.nil?
+		r.merge i if !r.nil? and !i.nil?
 	}.to_a.each do |ymd_ary|
 		ymd = ymd_ary[0]
 		ary = ymd_ary[1]
