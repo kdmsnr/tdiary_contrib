@@ -22,10 +22,12 @@ def category_similar( categories = [], max_item = 3)
 	end
 	
 	unless items.empty?
+		'<div class="section">' +
 		"<h3 class='category-similar'>#{category_similar_label}</h3>" +
 		"<ul>" +
 		items.sort.reverse[0, max_item].map{|i| "<li>#{i}</i>" }.join("\n") +
-		"</ul>"
+		"</ul>" +
+		"</div>"
 	end
 end
 
