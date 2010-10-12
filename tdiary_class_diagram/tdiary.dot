@@ -1,0 +1,28 @@
+/* $dot -Tpng tdiary.dot -o tdiary.dot */
+digraph tdiary {
+  graph [size="13,13",rankdir = BT];
+  node [shape = "box"];
+  edge [arrowhead = "empty"];
+
+  TDiaryView -> TDiaryBase;
+  TDiaryDay -> TDiaryView;
+  TDiaryComment -> TDiaryDay;
+  TDiaryLatest -> TDiaryView;
+  TDiaryMonthBase -> TDiaryView
+  TDiaryMonth -> TDiaryMonthBase;
+  TDiaryNYear -> TDiaryMonthBase;
+  TDiaryCategoryView -> TDiaryBase;
+  TDiarySearch -> TDiaryBase;
+  TDiaryAuthorOnlyBase -> TDiaryBase;
+  TDiaryUpdate -> TDiaryAdmin;
+  TDiaryAppend -> TDiaryUpdate;
+  TDiaryEdit -> TDiaryAdmin;
+  TDiaryReplace -> TDiaryUpdate;
+  TDiaryPreview -> TDiaryAdmin;
+  TDiaryFormPlugin -> TDiaryAuthorOnlyBase;
+  TDiaryShowComment -> TDiaryAdmin;
+  TDiarySaveConf -> TDiaryConf;
+  TDiaryConf -> TDiaryAuthorOnlyBase;
+  TDiaryForm -> TDiaryAdmin;
+  TDiaryAdmin -> TDiaryAuthorOnlyBase;
+}
