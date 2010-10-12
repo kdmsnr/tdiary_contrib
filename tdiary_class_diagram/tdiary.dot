@@ -4,25 +4,53 @@ digraph tdiary {
   node [shape = "box"];
   edge [arrowhead = "empty"];
 
+  TDiaryError -> StandardError;
+  PermissionError -> TDiaryError;
+  PluginError -> TDiaryError;
+  BadStyleError -> TDiaryError;
+  NotFound -> TDiaryError;
+  ForceRedirect -> StandardError;
+  TDiaryAuthorOnlyBase -> TDiaryBase;
+  TDiaryAdmin -> TDiaryAuthorOnlyBase;
+  TDiaryForm -> TDiaryAdmin;
+  TDiaryEdit -> TDiaryAdmin;
+  TDiaryPreview -> TDiaryAdmin;
+  TDiaryUpdate -> TDiaryAdmin;
+  TDiaryAppend -> TDiaryUpdate;
+  TDiaryReplace -> TDiaryUpdate;
+  TDiaryShowComment -> TDiaryAdmin;
+  TDiaryFormPlugin -> TDiaryAuthorOnlyBase;
+  TDiaryConf -> TDiaryAuthorOnlyBase;
+  TDiarySaveConf -> TDiaryConf;
   TDiaryView -> TDiaryBase;
   TDiaryDay -> TDiaryView;
   TDiaryComment -> TDiaryDay;
-  TDiaryLatest -> TDiaryView;
-  TDiaryMonthBase -> TDiaryView
+  TDiaryMonthBase -> TDiaryView;
   TDiaryMonth -> TDiaryMonthBase;
   TDiaryNYear -> TDiaryMonthBase;
+  TDiaryMonthWithoutFilter -> TDiaryMonth;
+  TDiaryLatest -> TDiaryView;
   TDiaryCategoryView -> TDiaryBase;
   TDiarySearch -> TDiaryBase;
-  TDiaryAuthorOnlyBase -> TDiaryBase;
-  TDiaryUpdate -> TDiaryAdmin;
-  TDiaryAppend -> TDiaryUpdate;
-  TDiaryEdit -> TDiaryAdmin;
-  TDiaryReplace -> TDiaryUpdate;
-  TDiaryPreview -> TDiaryAdmin;
-  TDiaryFormPlugin -> TDiaryAuthorOnlyBase;
-  TDiaryShowComment -> TDiaryAdmin;
-  TDiarySaveConf -> TDiaryConf;
-  TDiaryConf -> TDiaryAuthorOnlyBase;
-  TDiaryForm -> TDiaryAdmin;
-  TDiaryAdmin -> TDiaryAuthorOnlyBase;
+  TDiaryTrackBackError -> StandardError;
+  TDiaryTrackBackBase -> TDiaryBase;
+  TDiaryTrackBackReceive -> TDiaryTrackBackBase;
+  TDiaryTrackBackShow -> TDiaryTrackBackBase;
+  /*
+  DefaultIO -> IOBase;
+  DefaultFilter -> Filter;
+  SpamFilter -> Filter;
+  Dispatcher;
+  IndexMain;
+  UpdateMain;
+  Comment;
+  Paragraph;
+  Diary;
+  TDiarySection;
+  TDiaryDiary;
+  WikiSection;
+  WikiDiary;
+  Config;
+  Plugin;
+  */
 }
