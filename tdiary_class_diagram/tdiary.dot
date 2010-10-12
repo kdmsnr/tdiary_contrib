@@ -1,4 +1,4 @@
-/* $dot -Tpng tdiary.dot -o tdiary.dot */
+/* $dot -Tpng tdiary.dot -o tdiary.png */
 digraph tdiary {
   graph [size="13,13",rankdir = BT];
   node [shape = "box"];
