@@ -53,23 +53,6 @@ EOS
 	result
 end
 
-if $0 == __FILE__
-	class Conf
-		def secure
-			true
-		end
-	end
-	@conf = Conf.new
-
-	def h(str)
-		str
-	end
-
-	@cache_path = "./"
-
-	puts tatsu_zine(1, File.open("./1.html"){|f| f.read})
-end
-
 # Local Variables:
 # mode: ruby
 # indent-tabs-mode: t
