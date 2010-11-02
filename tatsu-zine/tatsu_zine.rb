@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def tatsu_zine_cache_dir
 	cache = "#{@cache_path}/tatsu-zine"
 	Dir.mkdir( cache ) unless File.directory?( cache )
@@ -32,10 +33,10 @@ def tatsu_zine( id, doc = nil )
 	require 'rexml/document'
 	xml = REXML::Document.new( doc )
 	section = "//html/body/div/div[3]/section/div[2]"
-	title = REXML::XPath.match( xml, "#{section}/h1" ).first
-	author = REXML::XPath.match( xml, "#{section}/p[@class='author']" ).first
+	title = REXML::XPath.match( xml, "#{section}/h1" ).first.text
+	author = REXML::XPath.match( xml, "#{section}/p[@class='author']" ).first.text
 	description =
-		REXML::XPath.match( xml, "#{section}/div[@class='description']" ).first
+		REXML::XPath.match( xml, "#{section}/div[@class='description']" ).first.to_s.gsub(/<div class='description'>/, '').gsub(/<span class='betabook'>β版<\/span>/, '').gsub(/<\/div>/, '')
 
 	result = <<-EOS
 <p><a class="tatsu-zine" href="#{h link}">
