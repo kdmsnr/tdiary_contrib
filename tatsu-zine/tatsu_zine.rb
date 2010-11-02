@@ -36,7 +36,7 @@ def tatsu_zine( id, doc = nil )
 	title = REXML::XPath.match( xml, "#{section}/h1" ).first.text
 	author = REXML::XPath.match( xml, "#{section}/p[@class='author']" ).first.text
 	description =
-		REXML::XPath.match( xml, "#{section}/div[@class='description']" ).first.to_s.gsub(/<div class='description'>/, '').gsub(/<span class='betabook'>β版<\/span>/, '').gsub(/<\/div>/, '')
+		REXML::XPath.match( xml, "#{section}/div[@class='description']" ).first.to_s.str.gsub(/<\/?[^>]*>/, "").gsub(/β版/, '')
 
 	result = <<-EOS
 <p><a class="tatsu-zine" href="#{h link}">
