@@ -26,6 +26,7 @@ def tatsu_zine( id, doc = nil )
 	domain = "http://tatsu-zine.com"
 	image = "#{domain}/images/books/#{id}/cover_s.jpg"
 	link = "#{domain}/books/1"
+	require 'open-uri'
 	doc ||= open(link)
 
 	require 'rexml/document'
