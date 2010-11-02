@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+# You can redistribute it and/or modify it under the same license as tDiary.
+#
+# display book info in http://tatsu-zine.com/ like amazon.rb
+# USAGE: {{tatsu_zine 1}}
+
 def tatsu_zine_cache_dir
 	cache = "#{@cache_path}/tatsu-zine"
 	Dir.mkdir( cache ) unless File.directory?( cache )
