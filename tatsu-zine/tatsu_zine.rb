@@ -25,7 +25,7 @@ rescue
 end
 
 def tatsu_zine( id, doc = nil )
-	if @conf.secure and !(result = tatsu_zine_cache_get(id)).nil?
+	if !@conf.secure and !(result = tatsu_zine_cache_get(id)).nil?
 		return result
 	end
 
@@ -56,7 +56,7 @@ def tatsu_zine( id, doc = nil )
 	</div></a>
 EOS
 
-	tatsu_zine_cache_set( id, result ) if @conf.secure
+	tatsu_zine_cache_set( id, result ) unless @conf.secure
 	result
 end
 
