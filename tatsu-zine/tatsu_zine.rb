@@ -39,14 +39,16 @@ def tatsu_zine( id, doc = nil )
 		REXML::XPath.match( xml, "#{section}/div[@class='description']" ).first.to_s.gsub(/<\/?[^>]*>/, "").gsub(/β版/, '')
 
 	result = <<-EOS
-<p><a class="tatsu-zine" href="#{h link}">
-  <img src="#{h image}" class="tatsu-zine" alt="#{h title}" height="150" width="100">
-  <div class="tatsu-zine-desc">
-    <span class="tatsu-zine-title">#{h title}</span><br>
-    <span class="tatsu-zine-author">#{h author}</span><br>
-    <span class="tatzu-zine-description">#{h description}</span>
-  </div>
-</a></p>
+	<a class="amazon-detail" href="#{h link}"><div class="amazon-detail">
+		<img class="amazon-detail left" src="#{h image}"
+		height="150" width="100"
+		alt="#{h title}">
+		<div class="amazon-detail-desc">
+			<span class="amazon-title">#{h title}</span><br>
+			<span class="amazon-author">#{h author}</span><br>
+			<span class="amazon-label">#{h description}</span><br>
+		</div><br style="clear: left">
+	</div></a>
 EOS
 
 	tatsu_zine_cache_set( id, result ) if @conf.secure
