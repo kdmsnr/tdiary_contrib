@@ -43,6 +43,9 @@ def tatsu_zine( id, doc = nil )
 	description =
 		REXML::XPath.match( xml, "#{section}/div[@class='description']" ).
 		first.to_s.gsub(/<\/?[^>]*>/, "").gsub(/β版/, '')
+	image = domain +
+		REXML::XPath.match( xml, "/html/body/div/div[3]/section/div/img").
+		first.attribute["src"]
 
 	result = <<-EOS
 	<a class="amazon-detail" href="#{h link}"><div class="amazon-detail">
