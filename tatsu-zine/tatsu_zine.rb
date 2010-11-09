@@ -30,7 +30,6 @@ def tatsu_zine( id, doc = nil )
 	end
 
 	domain = "http://tatsu-zine.com"
-	image = "#{domain}/images/books/#{id}/cover_s.jpg"
 	link = "#{domain}/books/#{id}"
 	require 'open-uri'
 	doc ||= open(link)
