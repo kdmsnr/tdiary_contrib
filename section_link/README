@@ -1,0 +1,5 @@
+セクションにもpermalinkをつけます。
+
+* tdiary以下のファイル3つ：tdiary以下に入れます（wikiとtdiary記法に対応しています）
+* misc/plugin/section_link.rb を設定画面から有効にします
+* mod_rewriteを使って拡張子を書き換えているひとは、misc/plugin/section_link_anchor.rbも有効にします
